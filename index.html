@@ -221,8 +221,6 @@
 <script>
     axios.get('https://httpbin.org/user-agent')
         .then(function (response) {
-            console.log(response)
-
             let $header = document.getElementsByClassName('useragent-header')
             for (let i = 0; i < $header.length; i++) {
                 $header[i].textContent = response.data['user-agent']
@@ -233,7 +231,7 @@
             }
         })
         .catch(function (error) {
-            console.log(error)
+            console.error(error)
         })
 </script>
 </body>
