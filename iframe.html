@@ -12,6 +12,7 @@
             appCodeName: navigator.appCodeName,
             appName: navigator.appName,
             appVersion: navigator.appVersion,
+            vendor: navigator.vendor,
         }
     </script>
     <style>
@@ -76,6 +77,10 @@
         <td><code class="navigator-from-head-app-version"></code></td>
     </tr>
     <tr>
+        <td class="caption"><code>navigator.vendor</code></td>
+        <td><code class="navigator-from-head-vendor"></code></td>
+    </tr>
+    <tr>
         <td colspan="2">
             <p>These values were determined using a JavaScript script that was run when this page was loaded inside iframe</p>
         </td>
@@ -105,6 +110,10 @@
     <tr>
         <td class="caption"><code>navigator.appVersion</code></td>
         <td><code class="navigator-deferred-app-version"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.vendor</code></td>
+        <td><code class="navigator-deferred-vendor"></code></td>
     </tr>
     <tr>
         <td colspan="2">
@@ -141,6 +150,11 @@
         $appVersion[i].textContent = fromHead.appVersion
     }
 
+    let $vendor = document.getElementsByClassName('navigator-from-head-vendor')
+    for (let i = 0; i < $vendor.length; i++) {
+        $vendor[i].textContent = fromHead.vendor
+    }
+
     window.setTimeout(function () {
         console.debug('Script in <body/> tag (deferred)', navigator)
 
@@ -149,7 +163,7 @@
             $ua[i].textContent = navigator.userAgent
 
             if (fromHead.userAgent !== navigator.userAgent) {
-                $ua[i].className += $ua[i].className + ' warning'
+                $ua[i].className += ' warning'
             }
         }
 
@@ -158,7 +172,7 @@
             $platform[i].textContent = navigator.platform
 
             if (fromHead.platform !== navigator.platform) {
-                $platform[i].className += $platform[i].className + ' warning'
+                $platform[i].className += ' warning'
             }
         }
 
@@ -167,7 +181,7 @@
             $codename[i].textContent = navigator.appCodeName
 
             if (fromHead.appCodeName !== navigator.appCodeName) {
-                $codename[i].className += $codename[i].className + ' warning'
+                $codename[i].className += ' warning'
             }
         }
 
@@ -176,7 +190,7 @@
             $appName[i].textContent = navigator.appName
 
             if (fromHead.appName !== navigator.appName) {
-                $appName[i].className += $appName[i].className + ' warning'
+                $appName[i].className += ' warning'
             }
         }
 
@@ -185,7 +199,16 @@
             $appVersion[i].textContent = navigator.appVersion
 
             if (fromHead.appVersion !== navigator.appVersion) {
-                $appVersion[i].className += $appVersion[i].className + ' warning'
+                $appVersion[i].className += ' warning'
+            }
+        }
+
+        let $vendor = document.getElementsByClassName('navigator-deferred-vendor')
+        for (let i = 0; i < $vendor.length; i++) {
+            $vendor[i].textContent = navigator.vendor
+
+            if (fromHead.vendor !== navigator.vendor) {
+                $vendor[i].className += ' warning'
             }
         }
     }, 1)
