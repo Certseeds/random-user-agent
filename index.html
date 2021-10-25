@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="robots" content="noindex, nofollow" />
+    <title>User-Agent test</title>
+    <script>
+        console.debug('Script in <head/> tag', navigator)
+
+        const fromHead = {
+            userAgent: navigator.userAgent,
+            platform: navigator.platform,
+            appCodeName: navigator.appCodeName,
+            appName: navigator.appName,
+            appVersion: navigator.appVersion,
+        }
+    </script>
+    <style>
+        html, body {
+            margin: 0;
+            background-color: #222;
+            color: #eee;
+            font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Ubuntu, Arial, sans-serif;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        body {
+            padding: 1vh 15vh;
+        }
+
+        .warning {
+            color: #ef8484;
+        }
+
+        code {
+            border: solid 1px #333;
+            padding: .3em;
+            line-height: 2em;
+        }
+
+        table tr td {
+            padding: .4em 0;
+        }
+
+        table tr td.caption {
+            text-align: right;
+            font-weight: bold;
+        }
+
+        iframe {
+            border: none;
+            width: 100%;
+            height: 900px;
+        }
+    </style>
+</head>
+<body>
+
+<table>
+    <tr>
+        <td colspan="2">
+            <h2>Inline JavaScript detection</h2>
+        </td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.userAgent</code></td>
+        <td><code class="navigator-from-head-useragent"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.platform</code></td>
+        <td><code class="navigator-from-head-platform"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appCodeName</code></td>
+        <td><code class="navigator-from-head-app-codename"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appName</code></td>
+        <td><code class="navigator-from-head-app-name"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appVersion</code></td>
+        <td><code class="navigator-from-head-app-version"></code></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>These values were determined using a JavaScript script that was run when this page was loaded</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <h2>Deferred JavaScript detection</h2>
+        </td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.userAgent</code></td>
+        <td><code class="navigator-deferred-useragent"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.platform</code></td>
+        <td><code class="navigator-deferred-platform"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appCodeName</code></td>
+        <td><code class="navigator-deferred-app-codename"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appName</code></td>
+        <td><code class="navigator-deferred-app-name"></code></td>
+    </tr>
+    <tr>
+        <td class="caption"><code>navigator.appVersion</code></td>
+        <td><code class="navigator-deferred-app-version"></code></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>These values were determined using deferred JavaScript execution</p>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="2">
+            <h2>From the HTTP header</h2>
+        </td>
+    </tr>
+    <tr>
+        <td class="caption"><code>User-Agent</code></td>
+        <td><code class="useragent-header"></code></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+            <p>This value was extracted from the HTTP request to the <code>httpbin.org</code> API</p>
+        </td>
+    </tr>
+</table>
+
+<iframe src="iframe.html"></iframe>
+
+<script>
+    console.debug('Script in <body/> tag', navigator)
+
+    let $ua = document.getElementsByClassName('navigator-from-head-useragent')
+    for (let i = 0; i < $ua.length; i++) {
+        $ua[i].textContent = fromHead.userAgent
+    }
+
+    let $platform = document.getElementsByClassName('navigator-from-head-platform')
+    for (let i = 0; i < $platform.length; i++) {
+        $platform[i].textContent = fromHead.platform
+    }
+
+    let $codename = document.getElementsByClassName('navigator-from-head-app-codename')
+    for (let i = 0; i < $codename.length; i++) {
+        $codename[i].textContent = fromHead.appCodeName
+    }
+
+    let $appName = document.getElementsByClassName('navigator-from-head-app-name')
+    for (let i = 0; i < $appName.length; i++) {
+        $appName[i].textContent = fromHead.appName
+    }
+
+    let $appVersion = document.getElementsByClassName('navigator-from-head-app-version')
+    for (let i = 0; i < $appVersion.length; i++) {
+        $appVersion[i].textContent = fromHead.appVersion
+    }
+
+    window.setTimeout(function () {
+        console.debug('Script in <body/> tag (deferred)', navigator)
+
+        let $ua = document.getElementsByClassName('navigator-deferred-useragent')
+        for (let i = 0; i < $ua.length; i++) {
+            $ua[i].textContent = navigator.userAgent
+
+            if (fromHead.userAgent !== navigator.userAgent) {
+                $ua[i].className += $ua[i].className + ' warning'
+            }
+        }
+
+        let $platform = document.getElementsByClassName('navigator-deferred-platform')
+        for (let i = 0; i < $platform.length; i++) {
+            $platform[i].textContent = navigator.platform
+
+            if (fromHead.platform !== navigator.platform) {
+                $platform[i].className += $platform[i].className + ' warning'
+            }
+        }
+
+        let $codename = document.getElementsByClassName('navigator-deferred-app-codename')
+        for (let i = 0; i < $codename.length; i++) {
+            $codename[i].textContent = navigator.appCodeName
+
+            if (fromHead.appCodeName !== navigator.appCodeName) {
+                $codename[i].className += $codename[i].className + ' warning'
+            }
+        }
+
+        let $appName = document.getElementsByClassName('navigator-deferred-app-name')
+        for (let i = 0; i < $appName.length; i++) {
+            $appName[i].textContent = navigator.appName
+
+            if (fromHead.appName !== navigator.appName) {
+                $appName[i].className += $appName[i].className + ' warning'
+            }
+        }
+
+        let $appVersion = document.getElementsByClassName('navigator-deferred-app-version')
+        for (let i = 0; i < $appVersion.length; i++) {
+            $appVersion[i].textContent = navigator.appVersion
+
+            if (fromHead.appVersion !== navigator.appVersion) {
+                $appVersion[i].className += $appVersion[i].className + ' warning'
+            }
+        }
+    }, 1)
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script>
+    axios.get('https://httpbin.org/user-agent')
+        .then(function (response) {
+            console.log(response)
+
+            let $header = document.getElementsByClassName('useragent-header')
+            for (let i = 0; i < $header.length; i++) {
+                $header[i].textContent = response.data['user-agent']
+
+                if (fromHead.userAgent !== response.data['user-agent']) {
+                    $header[i].className += $header[i].className + ' warning'
+                }
+            }
+        })
+        .catch(function (error) {
+            console.log(error)
+        })
+</script>
+</body>
+</html>
